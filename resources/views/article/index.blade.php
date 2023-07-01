@@ -18,6 +18,7 @@
             <th>#</th>
             <th>Title</th>
             <th>Owner</th>
+            <th>Category</th>
             <th>Actions</th>
             <th>Created_at</th>
             <th>Updated_at</th>
@@ -35,6 +36,9 @@
                 </td>
                 <td>
                     {{ $article->user_id }}
+                </td>
+                <td>
+                    {{ $article->category_id }}
                 </td>
                 <td>
                    <div class=" btn-group">
@@ -58,12 +62,12 @@
             </tr>
         @empty
             <tr>
-                <td colspan="4" class="text-center">
+                <td colspan="7" class="text-center">
                     No articles found
                 </td>
             </tr>
         @endforelse
     </tbody>
 </table>
-
+{{ $articles->onEachSide(1)->links() }}
 @endsection

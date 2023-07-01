@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Category;
 
 class ArticleController extends Controller
 {
@@ -23,7 +24,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('article.create');
+        $categories = Category::all();
+        return view('article.create', compact('categories'));
     }
 
     /**
@@ -35,6 +37,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->description = $request->description;
         $article->user_id = Auth::id();
+        $article->category_id = $request->category;
         $article->save();
 
         return redirect()->route('article.index')->with('status', 'Successfully created article');
@@ -45,7 +48,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('article.show', compact('article'));
     }
 
     /**
@@ -53,7 +56,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        $categories = Category::all();
+        return view('article.edit', ['article' => $article, 'categories' => $categories]);
     }
 
     /**
@@ -61,7 +65,12 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $article->title = $request->title;
+        $article->category_id = $request->category;
+        $article->description = $request->description;
+        $article->update();
+
+        return redirect()->route('article.index')->with('status', 'Article updated successfully');
     }
 
     /**
@@ -69,6 +78,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect()->back()->with('status', 'Article deleted successfully');
     }
 }

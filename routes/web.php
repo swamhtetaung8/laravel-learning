@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -25,5 +26,6 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('article', ArticleController::class);
+    Route::resource('category', CategoryController::class);
     Route::get('user', [HomeController::class, 'user'])->name('user.index');
 });

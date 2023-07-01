@@ -30,14 +30,21 @@
                             @endif
                         @else
                             <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('user.index') }}">User List</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('category.create') }}">Create Category</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('category.index') }}">Category List</a>
+                            </li>
+                            <li class="nav-item">
                                     <a class="nav-link" href="{{ route('article.create') }}">Create Article</a>
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ route('article.index') }}">Article List</a>
                             </li>
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.index') }}">User List</a>
-                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

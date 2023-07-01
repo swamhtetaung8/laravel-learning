@@ -14,6 +14,19 @@
         @enderror
     </div>
     <div class="my-3">
+        <label for="" class="form-label">Category</label>
+        <select name="category" class=" form-select @error('category')
+            is-invalid
+        @enderror" id="">
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' :'' }}>{{ $category->title }}</option>
+            @endforeach
+        </select>
+        @error('category')
+            <div class=" invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="my-3">
         <label for="" class="form-label">Article Description</label>
         <textarea name="description" class="form-control @error('description')
             is-invalid
