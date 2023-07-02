@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -56,6 +57,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        // Gate::authorize('article-update', $article);
+        $this->authorize('update', $article);
         $categories = Category::all();
         return view('article.edit', ['article' => $article, 'categories' => $categories]);
     }
@@ -65,6 +68,12 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        // if (!Gate::allows('article-update', $article)) {
+        //     return abort(403, 'Cannot allow you motherfucker.');
+        // };
+
+        // Gate::authorize('article-update', $article);
+        $this->authorize('update', $article);
         $article->title = $request->title;
         $article->category_id = $request->category;
         $article->description = $request->description;
@@ -78,6 +87,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
         $article->delete();
         return redirect()->back()->with('status', 'Article deleted successfully');
     }

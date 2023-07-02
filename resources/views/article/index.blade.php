@@ -43,8 +43,12 @@
                 <td>
                    <div class=" btn-group">
                        <a href="{{ route('article.show',$article->id) }}" class="bi bi-info btn btn-outline-dark btn-sm"></a>
-                       <a href="{{ route('article.edit',$article->id) }}" class="bi bi-pencil btn btn-outline-dark btn-sm"></a>
-                       <button form="articleDeleteForm{{ $article->id }}" class="bi bi-trash3 btn btn-outline-dark btn-sm"></button>
+                       @can('update', $article)
+                            <a href="{{ route('article.edit',$article->id) }}" class="bi bi-pencil btn btn-outline-dark btn-sm"></a>
+                       @endcan
+                       @can('delete', $article)
+                           <button form="articleDeleteForm{{ $article->id }}" class="bi bi-trash3 btn btn-outline-dark btn-sm"></button>
+                       @endcan
                    </div>
                    <form id="articleDeleteForm{{ $article->id }}" action="{{ route('article.destroy',$article->id) }}" method="POST">
                         @csrf
