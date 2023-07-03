@@ -11,7 +11,8 @@
         <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Email</th>
+            <th>Role</th>
+            <th>Total Article</th>
             <th>Created_at</th>
             <th>Updated_at</th>
         </tr>
@@ -23,10 +24,14 @@
                     {{ $user->id }}
                 </td>
                 <td>
-                    <p class="mb-0">{{ $user->name }}</p>
+                    <p class="mb-0 small">{{ $user->name }}</p>
+                    <p class="mb-0 small text-black-50">{{ $user->email }}</p>
                 </td>
                 <td>
-                    <p class="mb-0">{{ $user->email }}</p>
+                    {{ $user->role }}
+                </td>
+                <td>
+                    <p class="mb-0">{{ $user->articles->count() }}</p>
                 </td>
                 <td>
                     <p class="small mb-0"><i class="bi bi-calendar me-2"></i>{{ $user->created_at->format('d M Y') }}</p>

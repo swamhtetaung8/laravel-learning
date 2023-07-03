@@ -18,7 +18,7 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'description' => fake()->realText(),
+            'description' => fake()->paragraph(500),
             'user_id' => rand(1, 11),
             'category_id' => rand(1, 5)
         ];

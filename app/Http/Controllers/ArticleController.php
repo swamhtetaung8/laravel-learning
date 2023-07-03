@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(10);
+        $articles = Article::when(Auth::user()->role !== 'admin', fn ($q) => $q->where('user_id', Auth::id()))->paginate(10);
         return view('article.index', compact('articles'));
     }
 

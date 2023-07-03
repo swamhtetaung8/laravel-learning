@@ -29,10 +29,10 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.index') }}">User List</a>
-                            </li>
-                            @can('viewAny', App\Models\Category::class)
+                        @can('admin-only', Auth::id())
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index') }}">User List</a>
+                        </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('category.create') }}">Create Category</a>
                                 </li>

@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Swam Htet Aung',
             'email' => 'swamhtetaungg@gmail.com',
             'email_verified_at' => now(),
+            'role' => 'admin',
             'password' => Hash::make('asdffdsa')
         ]);
     }

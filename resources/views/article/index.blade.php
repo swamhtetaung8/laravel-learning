@@ -17,7 +17,9 @@
         <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Owner</th>
+            @can('admin-only')
+                <th>Owner</th>
+            @endcan
             <th>Category</th>
             <th>Actions</th>
             <th>Created_at</th>
@@ -34,11 +36,13 @@
                     <p class="mb-0">{{ $article->title }}</p>
                     <p class="small text-black-50 mb-0">{{Str::limit( $article->description ,50)}}</p>
                 </td>
-                <td>
-                    {{ $article->user_id }}
+                @can('admin-only')
+                    <td>
+                    {{ $article->user->name }}
                 </td>
+                @endcan
                 <td>
-                    {{ $article->category_id }}
+                    {{ $article->category->title}}
                 </td>
                 <td>
                    <div class=" btn-group">
