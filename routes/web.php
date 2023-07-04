@@ -19,7 +19,7 @@ use App\Models\Category;
 |
 */
 
-Route::get('/', [PageController::class, 'index']);
+Route::get('/', [PageController::class, 'index'])->name('page.home');
 Route::get('/article-detail/{id}', [PageController::class, 'show'])->name('detail');
 
 Auth::routes();

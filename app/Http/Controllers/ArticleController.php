@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
@@ -16,7 +17,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::when(Auth::user()->role !== 'admin', fn ($q) => $q->where('user_id', Auth::id()))->paginate(10);
+        $articles = Article::when(request()->has('keyword'), function ($query) {
+            $query->where(function (Builder $builder) {
+                $keyword = request()->keyword;
+                $builder->where('title', 'LIKE', "%$keyword%");
+                $builder->orWhere('description', 'LIKE', "%$keyword%");
+            });
+        })->when(Auth::user()->role !== 'admin', fn ($query) => $query->where('user_id', Auth::id()))->paginate(10);
         return view('article.index', compact('articles'));
     }
 
