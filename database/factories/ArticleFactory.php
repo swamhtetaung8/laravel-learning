@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,15 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->sentence();
+        $slug = Str::slug($title);
+        $description = fake()->paragraph(200);
+        $excerpt = Str::words($description, 50, '...');
         return [
-            'title' => fake()->sentence(),
-            'description' => fake()->paragraph(500),
+            'title' => $title,
+            'slug' => $slug,
+            'description' => $description,
+            'excerpt' => $excerpt,
             'user_id' => rand(1, 11),
             'category_id' => rand(1, 5)
         ];

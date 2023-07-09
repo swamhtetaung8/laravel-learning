@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use App\Models\Category;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Gate;
 
 class ArticleController extends Controller
 {
@@ -43,7 +44,9 @@ class ArticleController extends Controller
     {
         $article = new Article;
         $article->title = $request->title;
+        $article->slug = Str::slug($request->title);
         $article->description = $request->description;
+        $article->excerpt = Str::words($request->description, 50, '...');
         $article->user_id = Auth::id();
         $article->category_id = $request->category;
         $article->save();
@@ -82,8 +85,10 @@ class ArticleController extends Controller
         // Gate::authorize('article-update', $article);
         $this->authorize('update', $article);
         $article->title = $request->title;
+        $article->slug = Str::slug($request->title);
         $article->category_id = $request->category;
         $article->description = $request->description;
+        $article->excerpt = Str::words($request->description, 50, '...');
         $article->update();
 
         return redirect()->route('article.index')->with('status', 'Article updated successfully');

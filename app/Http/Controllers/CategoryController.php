@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -33,6 +34,7 @@ class CategoryController extends Controller
     {
         $category = new Category;
         $category->title = $request->title;
+        $category->slug = Str::slug($request->title);
         $category->user_id = Auth::id();
         $category->save();
 
@@ -62,6 +64,7 @@ class CategoryController extends Controller
     {
         $this->authorize('update', $category);
         $category->title = $request->title;
+        $category->slug = Str::slug($request->title);
         $category->update();
 
         return redirect()->route('category.index')->with('status', 'Category updated successfully');
